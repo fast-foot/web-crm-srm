@@ -4,22 +4,17 @@ $(document).ready(function () {
         var startMonth = parseInt($('#start-month').val());
         var endYear = parseInt($('#end-year').val());
         var endMonth = parseInt($('#end-month').val());
+
+        var plansPeriods = generatePlanPeriods(startYear, startMonth, endYear, endMonth);
+
         var productRow = "<tr>";
 
         productRow += "<td>" + ($('#crm-form #products-info-table > tbody > tr').length + 1) + "</td>";
         productRow += getProductDetailsCellData();
-        productRow += "<td><div>" + buildStrategicPlanTable(
-                                        generateStrategicPlanPeriods(
-                                            startYear,
-                                            startMonth,
-                                            endYear,
-                                            endMonth
-                                        )
-                                    ) +
-                      "</div></td>";
+        productRow += "<td><div>" + buildStrategicPlanTable(plansPeriods) + "</div></td>";
+        productRow += "<td><div>" + buildPerspectivePlanTable(plansPeriods) + "</div></td>";
+        productRow += "<td><div>" + buildOperativePlanTable(plansPeriods) + "</div></td>";
 
-        productRow += "<td></td>";
-        productRow += "<td></td>";
         productRow += "<td></td></tr>";
 
         $('#crm-form #products-info-table > tbody').append(productRow);
@@ -27,7 +22,7 @@ $(document).ready(function () {
     });
 });
 
-function generateStrategicPlanPeriods(startYear, startMonthNumber, endYear, endMonthNumber) {
+function generatePlanPeriods(startYear, startMonthNumber, endYear, endMonthNumber) {
     var result = {};
 
     if (startYear <= endYear) {
@@ -72,27 +67,90 @@ function generateStrategicPlanPeriods(startYear, startMonthNumber, endYear, endM
     return result;
 }
 
-function buildStrategicPlanTable(strategicPlanPeriods) {
+function buildStrategicPlanTable(planPeriods) {
     var table = "<table class='table table-responsive table-bordered'><thead><tr>";
     var quartersRow = "";
     var inputsForQuarters = "<tr>";
-    var monthsRow = "";
 
-    for (var year in strategicPlanPeriods) {
-        if (strategicPlanPeriods.hasOwnProperty(year)) {
-            table += '<th colspan="' + Object.keys(strategicPlanPeriods[year]).length +'">' + year + '</th>';
-            for (var quarter in strategicPlanPeriods[year]) {
+    for (var year in planPeriods) {
+        if (planPeriods.hasOwnProperty(year)) {
+            table += '<th colspan="' + Object.keys(planPeriods[year]).length +'">' + year + '</th>';
+            for (var quarter in planPeriods[year]) {
                 quartersRow += "<td>" + quarter + " quarter</td>";
                 inputsForQuarters += "<td><input type='number'/></td>";
-                /*strategicPlanPeriods[year][quarter].forEach(function (month) {
-                    monthsRow += "<td>" + month + "</td>";
-                });*/
             }
         }
     }
 
     table += "</tr></thead><tbody><tr>" + quartersRow + "</tr>";
     table += inputsForQuarters + "</tr>";
+
+    table += "</tbody></table>";
+
+    return table;
+}
+
+function buildPerspectivePlanTable(planPeriods) {
+    var table = "<table class='table table-responsive table-bordered'><thead><tr>";
+    var quartersRow = "";
+    var inputsForMonths = "<tr>";
+    var monthsRow = "<tr>";
+
+    for (var year in planPeriods) {
+        if (planPeriods.hasOwnProperty(year)) {
+            var colSpansToAddForYear = 0;
+            for (var quarter in planPeriods[year]) {
+                quartersRow += '<td colspan="' + planPeriods[year][quarter].size +'">' + quarter + ' quarter</td>';
+                planPeriods[year][quarter].forEach(function (month) {
+                    inputsForMonths += "<td><input type='number'/></td>";
+                    monthsRow += "<td>" + month + "</td>";
+                });
+                colSpansToAddForYear += planPeriods[year][quarter].size;
+            }
+            table += '<th colspan="' + colSpansToAddForYear +'">' + year + '</th>';
+        }
+    }
+
+    table += "</tr></thead><tbody><tr>" + quartersRow + "</tr>";
+    table += monthsRow + "</tr>";
+    table += inputsForMonths + "</tr>";
+
+    table += "</tbody></table>";
+
+    return table;
+}
+
+function buildOperativePlanTable(planPeriods) {
+    var table = "<table class='table table-responsive table-bordered'><thead><tr>";
+    var quartersRow = "";
+    var inputsForDecades = "<tr>";
+    var monthsRow = "<tr>";
+    var decadesRow = "<tr>";
+
+    for (var year in planPeriods) {
+        if (planPeriods.hasOwnProperty(year)) {
+            var colSpansToAddForYear = 0;
+            for (var quarter in planPeriods[year]) {
+                var colSpansToAddForQuarter = 0;
+                planPeriods[year][quarter].forEach(function (month) {
+                    monthsRow += "<td colspan='3'>" + month + "</td>";
+                    for (var k = 0; k < 3; k++) {
+                        decadesRow += "<td>" + (k+1) + " decade</td>";
+                        inputsForDecades += "<td><input type='number'/></td>";
+                        colSpansToAddForQuarter += 1;
+                    }
+                });
+                quartersRow += '<td colspan="' + colSpansToAddForQuarter +'">' + quarter + ' quarter</td>';
+                colSpansToAddForYear += colSpansToAddForQuarter;
+            }
+            table += '<th colspan="' + colSpansToAddForYear +'">' + year + '</th>';
+        }
+    }
+
+    table += "</tr></thead><tbody><tr>" + quartersRow + "</tr>";
+    table += monthsRow + "</tr>";
+    table += decadesRow + "</tr>";
+    table += inputsForDecades + "</tr>";
 
     table += "</tbody></table>";
 
