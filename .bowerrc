@@ -1,0 +1,6 @@
+{
+  "directory": "./app/static/bower_components",
+  "resolvers": [
+    "bower-npm-resolver"
+  ]
+}

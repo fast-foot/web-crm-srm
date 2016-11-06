@@ -1,0 +1,23 @@
+{
+  "name": "web-crm-srm",
+  "homepage": "https://github.com/fast-foot/web-crm-srm",
+  "authors": [
+    "Alexei Chudovsky <alexei.chudovsky@waveoc.com>"
+  ],
+  "description": "",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.7",
+    "moment": "^2.15.2",
+    "jquery": "^3.1.1"
+  }
+
+}

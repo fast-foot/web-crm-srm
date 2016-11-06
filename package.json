@@ -1,0 +1,24 @@
+{
+  "name": "web-srm-crm",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fast-foot/web-crm-srm.git"
+  },
+  "author": "Alexei Chudovsky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fast-foot/web-crm-srm/issues"
+  },
+  "homepage": "https://github.com/fast-foot/web-crm-srm#readme",
+  "devDependencies": {
+    "bower": "^1.7.9",
+    "gulp": "^3.9.1",
+    "gulp-browser": "^2.1.4"
+  }
+}

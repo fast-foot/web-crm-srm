@@ -8,7 +8,8 @@ class Company(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(50))
-    contacts = relationship('Contact', back_populates='company')
+    #contacts = relationship('Contact', back_populates='company')
+    contacts = relationship('Contact')
 
     def __init__(self, name):
         self.name = name
@@ -22,8 +23,10 @@ class Contact(Base):
 
     id = Column(Integer, primary_key=True)
     company_id = Column(Integer, ForeignKey('companies.id'))
-    manager = relationship('Manager', uselist=False, back_populates='contact')
-    deal = relationship('Deal', back_populates='contact')
+    #manager = relationship('Manager', uselist=False, back_populates='contact')
+    manager = relationship('Manager', uselist=False)
+    #deal = relationship('Deal', back_populates='contact')
+    deal = relationship('Deal')
     name = Column(String(100))
     post = Column(String(40))
     email = Column(String(50))
@@ -78,8 +81,10 @@ class Plan(Base):
     __tablename__ = 'plans'
 
     id = Column(Integer, primary_key=True)
-    plan_type = relationship('PlanType', uselist=False, back_populates='plan')
-    amounts = relationship('Amount', back_populates='plan')
+    #plan_type = relationship('PlanType', uselist=False, back_populates='plan')
+    plan_type = relationship('PlanType', uselist=False)
+    #amounts = relationship('Amount', back_populates='plan')
+    amounts = relationship('Amount')
     start_date = Column(DateTime)
     end_date = Column(DateTime)
     accepted = Column(Boolean, default=False)
@@ -99,7 +104,7 @@ class PlanType(Base):
     id = Column(Integer, primary_key=True)
     plan_id = Column(Integer, ForeignKey('plans.id'))
     name = Column(String(40))
-    step = Column(Integer)
+    step = Column(String(40))
 
 
 class Currency(Base):

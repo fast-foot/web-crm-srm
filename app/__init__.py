@@ -1,7 +1,14 @@
 from flask import Flask
+
 from app.db.database import db_session
+from app.model import model
+from app.db.seed import run_seed
 
 application = Flask(__name__)
+
+run_seed(db_session, model)
+
+from app.web import view
 
 
 @application.after_request
