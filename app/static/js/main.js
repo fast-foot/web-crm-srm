@@ -8,17 +8,24 @@ $(document).ready(function () {
         var plansPeriods = generatePlanPeriods(startYear, startMonth, endYear, endMonth);
 
         var productRow = "<tr>";
+        var productNumber = $('#crm-form #products-info-table > tbody > tr').length + 1;
 
-        productRow += "<td class='col-lg-1'>" + ($('#crm-form #products-info-table > tbody > tr').length + 1) + "</td>";
+        productRow += "<td class='col-lg-1'>" + productNumber + "</td>";
         productRow += getProductDetailsForCRMCellData();
         productRow +=
             "<td class='col-lg-8'>" +
                 "<h4 class='centeredText'>Strategic</h4>" +
-                "<div class='tableDiv'>" + buildStrategicPlanTable(plansPeriods) + "</div>" +
+                "<div class='tableDiv'>" + buildStrategicPlanTable(plansPeriods, productNumber) + "</div>" +
+                    "<label for='strategic-total'>Total: </label>" +
+                    "<input value='0' id='strategic-total-" + productNumber + "' style='text-align: right' type='text' disabled/>" +
                 "<h4 class='centeredText'>Perspective</h4>" +
-                "<div class='tableDiv'>" + buildPerspectivePlanTable(plansPeriods) + "</div>" +
+                "<div class='tableDiv'>" + buildPerspectivePlanTable(plansPeriods, productNumber) + "</div>" +
+                    "<label for='perspective-total'>Total: </label>" +
+                    "<input value='0' id='perspective-total-" + productNumber + "' style='text-align: right' type='text' disabled/>" +
                 "<h4 class='centeredText'>Operative</h4>" +
-                "<div class='tableDiv'>" + buildOperativePlanTable(plansPeriods) + "</div>" +
+                "<div class='tableDiv'>" + buildOperativePlanTable(plansPeriods, productNumber) + "</div>" +
+                    "<label for='operative-total'>Total: </label>" +
+                    "<input value='0' id='operative-total-" + productNumber + "' style='text-align: right' type='text' disabled/>" +
             "</td>";
 
         productRow += "</tr>";
@@ -101,8 +108,8 @@ function generatePlanPeriods(startYear, startMonthNumber, endYear, endMonthNumbe
     return result;
 }
 
-function buildStrategicPlanTable(planPeriods) {
-    var table = "<table class='table table-responsive table-bordered centeredText'><thead><tr>";
+function buildStrategicPlanTable(planPeriods, productNumber) {
+    var table = "<table class='table table-responsive table-bordered centeredText' id='strategic-table-" + productNumber +"'><thead><tr>";
     var quartersRow = "";
     var inputsForQuarters = "<tr>";
 
@@ -111,7 +118,7 @@ function buildStrategicPlanTable(planPeriods) {
             table += '<th class="centeredText" colspan="' + Object.keys(planPeriods[year]).length +'">' + year + '</th>';
             for (var quarter in planPeriods[year]) {
                 quartersRow += "<td>" + quarter + " quarter</td>";
-                inputsForQuarters += "<td><input class='centeredText' type='number' min='0'/></td>";
+                inputsForQuarters += '<td><input onchange="calculateTotalSum(\'strategic\',' + productNumber + ')" class="centeredText" type="number" min="0"/></td>';
             }
         }
     }
@@ -124,8 +131,8 @@ function buildStrategicPlanTable(planPeriods) {
     return table;
 }
 
-function buildPerspectivePlanTable(planPeriods) {
-    var table = "<table class='table table-responsive table-bordered centeredText'><thead><tr>";
+function buildPerspectivePlanTable(planPeriods, productNumber) {
+    var table = "<table class='table table-responsive table-bordered centeredText' id='perspective-table-" + productNumber +"'><thead><tr>";
     var quartersRow = "";
     var inputsForMonths = "<tr>";
     var monthsRow = "<tr>";
@@ -136,7 +143,7 @@ function buildPerspectivePlanTable(planPeriods) {
             for (var quarter in planPeriods[year]) {
                 quartersRow += '<td colspan="' + planPeriods[year][quarter].size +'">' + quarter + ' quarter</td>';
                 planPeriods[year][quarter].forEach(function (month) {
-                    inputsForMonths += "<td><input class='centeredText' type='number' min='0'/></td>";
+                    inputsForMonths += '<td><input onchange="calculateTotalSum(\'perspective\',' + productNumber + ')" class="centeredText" type="number" min="0"/></td>';
                     monthsRow += "<td>" + month + "</td>";
                 });
                 colSpansToAddForYear += planPeriods[year][quarter].size;
@@ -154,8 +161,8 @@ function buildPerspectivePlanTable(planPeriods) {
     return table;
 }
 
-function buildOperativePlanTable(planPeriods) {
-    var table = "<table class='table table-responsive table-bordered centeredText'><thead><tr>";
+function buildOperativePlanTable(planPeriods, productNumber) {
+    var table = "<table class='table table-responsive table-bordered centeredText' id='operative-table-" + productNumber +"'><thead><tr>";
     var quartersRow = "";
     var inputsForDecades = "<tr>";
     var monthsRow = "<tr>";
@@ -170,7 +177,7 @@ function buildOperativePlanTable(planPeriods) {
                     monthsRow += "<td colspan='3'>" + month + "</td>";
                     for (var k = 0; k < 3; k++) {
                         decadesRow += "<td>" + (k+1) + " decade</td>";
-                        inputsForDecades += "<td><input class='centeredText' type='number' min='0'/></td>";
+                        inputsForDecades += '<td><input onchange="calculateTotalSum(\'operative\',' + productNumber + ')" class="centeredText" type="number" min="0"/></td>';
                         colSpansToAddForQuarter += 1;
                     }
                 });
@@ -243,7 +250,7 @@ function getProductDetailsForCRMCellData() {
         '<div class="form-group">' +
         '<label for="promo" class="col-lg-4 col-sm-4 control-label">Promo, %</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="number" class="form-control" id="promo">' +
+        '<input type="number" min="0" max="100" class="form-control" id="promo">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
@@ -319,4 +326,28 @@ function getProductDetailsForSRMCellData() {
         '</div>' +
         '</div>' +
         '</td>';
+}
+
+function calculateTotalSum(plan, productNumber) {
+    var totalSum = 0;
+
+    if (plan == 'strategic') {
+        $('#strategic-table-' + productNumber + ' input').each(function () {
+            totalSum += $(this).val() == "" ? 0 : parseInt($(this).val());
+        });
+
+        $('#strategic-total-'+productNumber).val(totalSum);
+    } else if (plan == 'perspective') {
+        $('#perspective-table-' + productNumber + ' input').each(function () {
+            totalSum += $(this).val() == "" ? 0 : parseInt($(this).val());
+        });
+
+        $('#perspective-total-'+productNumber).val(totalSum);
+    } else if (plan == 'operative') {
+        $('#operative-table-' + productNumber + ' input').each(function () {
+            totalSum += $(this).val() == "" ? 0 : parseInt($(this).val());
+        });
+
+        $('#operative-total-'+productNumber).val(totalSum);
+    }
 }
