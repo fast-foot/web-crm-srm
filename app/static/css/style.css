@@ -1,7 +1,16 @@
 body {
-    background: lightgray;
+    background: #f9f9f9;
 }
 
 #product-details {
     width: 200px;
+}
+
+.centeredText {
+    text-align: center;
+}
+
+.tableDiv {
+    overflow: auto;
+    width: 1000px;
 }

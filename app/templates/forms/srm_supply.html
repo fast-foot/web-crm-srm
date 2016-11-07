@@ -1,10 +1,148 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+<div id="srm-form-container" class="tab-pane fade">
+<form id="srm-form" class="form-horizontal">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="col-lg-4">
+                <h3 style="text-align: center">Supplier Information</h3><br>
+                <div class="form-group">
+                    <label for="company-name" class="col-sm-4 control-label">Company</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="company-name" placeholder="Company Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-name" class="col-sm-4 control-label">Contact Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="contact-name" placeholder="Contact Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-position" class="col-sm-4 control-label">Contact Position</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="contact-position" placeholder="Position">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email" class="col-sm-4 control-label">Contact Email</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="contact-email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="delivery-time" class="col-sm-4 control-label">Delivery Time</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="delivery-time" placeholder="Delivery Time">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h3 style="text-align: center">Purchasing Manager Information</h3><br>
+                <div class="form-group">
+                    <label for="sales-manager-name" class="col-sm-4 control-label">Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="sales-manager-name" placeholder="Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sales-manager-position" class="col-sm-4 control-label">Position</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="sales-manager-position" placeholder="Position">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sales-manager-email" class="col-sm-4 control-label">Email</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="sales-manager-email" placeholder="Email">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sales-manager-phone" class="col-sm-4 control-label">Phone</label>
+                    <div class="col-sm-8">
+                      <input type="tel" class="form-control" id="sales-manager-phone" placeholder="Phone Number">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sales-manager-fax" class="col-sm-4 control-label">Fax</label>
+                    <div class="col-sm-8">
+                      <input type="tel" class="form-control" id="sales-manager-fax" placeholder="Fax">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sales-manager-skype" class="col-sm-4 control-label">Skype</label>
+                    <div class="col-sm-8">
+                      <input type="tel" class="form-control" id="sales-manager-skype" placeholder="Skype Nickname">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h3 style="text-align: center">Extra Information</h3><br>
 
-</body>
-</html>
+                <div class="form-group">
+                    <label for="start-month" class="col-sm-5 control-label">Start Month and Year</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" id="start-month">
+                          <option value="0">January</option>
+                          <option value="1">February</option>
+                          <option value="2">March</option>
+                          <option value="3">April</option>
+                          <option value="4">May</option>
+                          <option value="5">June</option>
+                          <option value="6">July</option>
+                          <option value="7">August</option>
+                          <option value="8">September</option>
+                          <option value="9">October</option>
+                          <option value="10">November</option>
+                          <option value="11">December</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="number" min="2016" class="form-control" id="start-year">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="end-month" class="col-sm-5 control-label">End Month and Year</label>
+                    <div class="col-sm-4">
+                      <select class="form-control" id="end-month">
+                          <option value="0">January</option>
+                          <option value="1">February</option>
+                          <option value="2">March</option>
+                          <option value="3">April</option>
+                          <option value="4">May</option>
+                          <option value="5">June</option>
+                          <option value="6">July</option>
+                          <option value="7">August</option>
+                          <option value="8">September</option>
+                          <option value="9">October</option>
+                          <option value="10">November</option>
+                          <option value="11">December</option>
+                      </select>
+                    </div>
+                    <div class="col-sm-3">
+                      <input type="number" min="2016" class="form-control" id="end-year">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <h3 style="text-align: center; font-weight: 900; margin-top: 30px; margin-bottom: 40px;">Product Information</h3>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <table class="table table-responsive" id="products-info-table">
+                <thead>
+                    <tr>
+                        <th class="col-lg-1">№</th>
+                        <th class="col-lg-3">Product Details</th>
+                        <th class="col-lg-8 centeredText">Planning</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+            <button type="button" class="btn btn-success" id="btn-add-product" style="font-weight: 900;">Add Product</button>
+        </div>
+    </div>
+</form>
+</div>
