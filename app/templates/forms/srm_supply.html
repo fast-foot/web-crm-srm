@@ -1,8 +1,8 @@
 <div id="srm-form-container" class="tab-pane fade">
 <form id="srm-form" class="form-horizontal">
-    <div class="row">
+    <div class="row" id="main-info">
         <div class="col-lg-12">
-            <div class="col-lg-4">
+            <div class="col-lg-4 contact-info">
                 <h3 style="text-align: center">Supplier Information</h3><br>
                 <div class="form-group">
                     <label for="company-name" class="col-sm-4 control-label">Company</label>
@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 contact-info">
                 <h3 style="text-align: center">Purchasing Manager Information</h3><br>
                 <div class="form-group">
                     <label for="sales-manager-name" class="col-sm-4 control-label">Name</label>
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
+            <div class="col-lg-4 extra-info">
                 <h3 style="text-align: center">Extra Information</h3><br>
 
                 <div class="form-group">
@@ -142,6 +142,7 @@
                 <tbody></tbody>
             </table>
             <button type="button" class="btn btn-success" id="btn-add-product" style="font-weight: 900;">Add Product</button>
+            <button type="button" class="btn btn-warning" onclick="sendFormData('srm-form')" id="btn-xsl-export" style="font-weight: 900;">Export to .xslx</button>
         </div>
     </div>
 </form>

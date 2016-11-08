@@ -4,6 +4,7 @@ $(document).ready(function () {
         var startMonth = parseInt($('#crm-form #start-month').val());
         var endYear = parseInt($('#crm-form #end-year').val());
         var endMonth = parseInt($('#crm-form #end-month').val());
+        var formId = 'crm-form';
 
         var plansPeriods = generatePlanPeriods(startYear, startMonth, endYear, endMonth);
 
@@ -11,21 +12,21 @@ $(document).ready(function () {
         var productNumber = $('#crm-form #products-info-table > tbody > tr').length + 1;
 
         productRow += "<td class='col-lg-1'>" + productNumber + "</td>";
-        productRow += getProductDetailsForCRMCellData();
+        productRow += getProductDetailsForCRMCellData(productNumber);
         productRow +=
             "<td class='col-lg-8'>" +
                 "<h4 class='centeredText'>Strategic</h4>" +
-                "<div class='tableDiv'>" + buildStrategicPlanTable(plansPeriods, productNumber) + "</div>" +
+                "<div class='tableDiv'>" + buildStrategicPlanTable(plansPeriods, productNumber, formId) + "</div>" +
                     "<label for='strategic-total'>Total: </label>" +
-                    "<input value='0' id='strategic-total-" + productNumber + "' style='text-align: right' type='text' disabled/>" +
+                    "<input value='0' id='strategic-total-" + productNumber + "' style='text-align: right' type='text' readonly/>" +
                 "<h4 class='centeredText'>Perspective</h4>" +
-                "<div class='tableDiv'>" + buildPerspectivePlanTable(plansPeriods, productNumber) + "</div>" +
+                "<div class='tableDiv'>" + buildPerspectivePlanTable(plansPeriods, productNumber, formId) + "</div>" +
                     "<label for='perspective-total'>Total: </label>" +
-                    "<input value='0' id='perspective-total-" + productNumber + "' style='text-align: right' type='text' disabled/>" +
+                    "<input value='0' id='perspective-total-" + productNumber + "' style='text-align: right' type='text' readonly/>" +
                 "<h4 class='centeredText'>Operative</h4>" +
-                "<div class='tableDiv'>" + buildOperativePlanTable(plansPeriods, productNumber) + "</div>" +
+                "<div class='tableDiv'>" + buildOperativePlanTable(plansPeriods, productNumber, formId) + "</div>" +
                     "<label for='operative-total'>Total: </label>" +
-                    "<input value='0' id='operative-total-" + productNumber + "' style='text-align: right' type='text' disabled/>" +
+                    "<input value='0' id='operative-total-" + productNumber + "' style='text-align: right' type='text' readonly/>" +
             "</td>";
 
         productRow += "</tr>";
@@ -39,21 +40,29 @@ $(document).ready(function () {
         var startMonth = parseInt($('#srm-form #start-month').val());
         var endYear = parseInt($('#srm-form #end-year').val());
         var endMonth = parseInt($('#srm-form #end-month').val());
+        var formId = 'srm-form';
 
         var plansPeriods = generatePlanPeriods(startYear, startMonth, endYear, endMonth);
 
         var productRow = "<tr>";
+        var productNumber = $('#srm-form #products-info-table > tbody > tr').length + 1;
 
-        productRow += "<td class='col-lg-1'>" + ($('#srm-form #products-info-table > tbody > tr').length + 1) + "</td>";
-        productRow += getProductDetailsForSRMCellData();
+        productRow += "<td class='col-lg-1'>" + productNumber + "</td>";
+        productRow += getProductDetailsForSRMCellData(productNumber);
         productRow +=
             "<td class='col-lg-8'>" +
                 "<h4 class='centeredText'>Strategic</h4>" +
-                "<div class='tableDiv'>" + buildStrategicPlanTable(plansPeriods) + "</div>" +
+                "<div class='tableDiv'>" + buildStrategicPlanTable(plansPeriods, productNumber, formId) + "</div>" +
+                    "<label for='strategic-total'>Total: </label>" +
+                    "<input value='0' id='strategic-total-" + productNumber + "' style='text-align: right' type='text' readonly/>" +
                 "<h4 class='centeredText'>Perspective</h4>" +
-                "<div class='tableDiv'>" + buildPerspectivePlanTable(plansPeriods) + "</div>" +
+                "<div class='tableDiv'>" + buildPerspectivePlanTable(plansPeriods, productNumber, formId) + "</div>" +
+                    "<label for='perspective-total'>Total: </label>" +
+                    "<input value='0' id='perspective-total-" + productNumber + "' style='text-align: right' type='text' readonly/>" +
                 "<h4 class='centeredText'>Operative</h4>" +
-                "<div class='tableDiv'>" + buildOperativePlanTable(plansPeriods) + "</div>" +
+                "<div class='tableDiv'>" + buildOperativePlanTable(plansPeriods, productNumber, formId) + "</div>" +
+                    "<label for='operative-total'>Total: </label>" +
+                    "<input value='0' id='operative-total-" + productNumber + "' style='text-align: right' type='text' readonly/>" +
             "</td>";
 
         productRow += "</tr>";
@@ -108,7 +117,7 @@ function generatePlanPeriods(startYear, startMonthNumber, endYear, endMonthNumbe
     return result;
 }
 
-function buildStrategicPlanTable(planPeriods, productNumber) {
+function buildStrategicPlanTable(planPeriods, productNumber, formId) {
     var table = "<table class='table table-responsive table-bordered centeredText' id='strategic-table-" + productNumber +"'><thead><tr>";
     var quartersRow = "";
     var inputsForQuarters = "<tr>";
@@ -131,7 +140,7 @@ function buildStrategicPlanTable(planPeriods, productNumber) {
     return table;
 }
 
-function buildPerspectivePlanTable(planPeriods, productNumber) {
+function buildPerspectivePlanTable(planPeriods, productNumber, formId) {
     var table = "<table class='table table-responsive table-bordered centeredText' id='perspective-table-" + productNumber +"'><thead><tr>";
     var quartersRow = "";
     var inputsForMonths = "<tr>";
@@ -161,7 +170,7 @@ function buildPerspectivePlanTable(planPeriods, productNumber) {
     return table;
 }
 
-function buildOperativePlanTable(planPeriods, productNumber) {
+function buildOperativePlanTable(planPeriods, productNumber, formId) {
     var table = "<table class='table table-responsive table-bordered centeredText' id='operative-table-" + productNumber +"'><thead><tr>";
     var quartersRow = "";
     var inputsForDecades = "<tr>";
@@ -177,7 +186,7 @@ function buildOperativePlanTable(planPeriods, productNumber) {
                     monthsRow += "<td colspan='3'>" + month + "</td>";
                     for (var k = 0; k < 3; k++) {
                         decadesRow += "<td>" + (k+1) + " decade</td>";
-                        inputsForDecades += '<td><input onchange="calculateTotalSum(\'operative\',' + productNumber + ')" class="centeredText" type="number" min="0"/></td>';
+                        inputsForDecades += '<td><input onchange="calculateTotalSum(\'operative\',' + productNumber + ',' + formId + ')" class="centeredText" type="number" min="0"/></td>';
                         colSpansToAddForQuarter += 1;
                     }
                 });
@@ -198,9 +207,9 @@ function buildOperativePlanTable(planPeriods, productNumber) {
     return table;
 }
 
-function getProductDetailsForCRMCellData() {
+function getProductDetailsForCRMCellData(productNumber) {
     return '<td class="col-lg-3">' +
-        '<div id="product-details" class="form-horizontal">' +
+        '<div id="product-details-' + productNumber + '" class="form-horizontal">' +
         '<div class="form-group">' +
         '<label for="product-name" class="col-lg-4 col-sm-4 control-label">Product Name</label>' +
         '<div class="col-lg-8 col-sm-8">' +

@@ -17,3 +17,8 @@ def srm_supply():
 @application.route('/crm')
 def crm_supply():
     return render_template('forms/crm_supply.html')
+
+
+@application.route('/supply/save')
+def save_supply():
+    return 'done'
