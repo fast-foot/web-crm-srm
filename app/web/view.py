@@ -1,24 +1,24 @@
 import flask
 
-from flask import render_template
+from app.web import facade
 from app import application
 
 
 @application.route('/')
 def index():
-    return render_template('index.html')
+    return flask.render_template('index.html')
 
 
 @application.route('/srm')
 def srm_supply():
-    return render_template('forms/srm_supply.html')
+    return flask.render_template('forms/srm_supply.html')
 
 
 @application.route('/crm')
 def crm_supply():
-    return render_template('forms/crm_supply.html')
+    return flask.render_template('forms/crm_supply.html')
 
 
-@application.route('/supply/save')
+@application.route('/supply/save', methods=['POST'])
 def save_supply():
-    return 'done'
+    return facade.save_supply(flask.request)

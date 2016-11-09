@@ -1,22 +1,24 @@
 const SERVER_END_POINT = 'http://127.0.0.1:5000';
 
 $(document).ready(function () {
-    $('#btn-xsl-export').click(function() {
-        //console.log($('#crm-form').serialize());
-        /*$.ajax({
-            url: SERVER_END_POINT + '/supply/save',
-            data: $('#crm-form').serialize(),
+
+});
+
+function sendFormData(formId) {
+    // var data = {
+    //     data: JSON.stringify(getFormData(formId))
+    // };
+
+    $.ajax({
+            url: '/supply/save',
+            data: JSON.stringify(getFormData(formId)),
             type: 'POST',
         }).done(function(data) {
             console.log(data);
         }).fail(function (e) {
-            console.log('error');
-        });*/
+            console.log(e);
     });
-});
 
-function sendFormData(formId) {
-    var data = getFormData(formId);
 }
 
 function getFormData(formId) {
@@ -44,22 +46,28 @@ function getFormData(formId) {
         data.products.push(product);
     });
 
-    var contactsDetails = {};
+    var contactDetails = {};
+    var managerDetails = {};
     var extraDetails = {};
 
     $('#' + formId + ' #main-info .contact-info input').each(function () {
-        contactsDetails[$(this).attr('id')] = $(this).val();
+        contactDetails[$(this).attr('name')] = $(this).val();
+    });
+
+    $('#' + formId + ' #main-info .manager-info input').each(function () {
+        managerDetails[$(this).attr('name')] = $(this).val();
     });
 
     $('#' + formId + ' #main-info .extra-info input').each(function () {
-        extraDetails[$(this).attr('id')] = $(this).val();
+        extraDetails[$(this).attr('name')] = $(this).val();
     });
 
     $('#' + formId + ' #main-info .extra-info select').each(function () {
-        extraDetails[$(this).attr('id')] = $(this).find('option:selected').text();
+        extraDetails[$(this).attr('name')] = $(this).find('option:selected').text();
     });
 
-    data.contactsDetails = contactsDetails;
+    data.contactDetails = contactDetails;
+    data.managerDetails = managerDetails;
     data.extraDetails = extraDetails;
 
     console.log(data);
