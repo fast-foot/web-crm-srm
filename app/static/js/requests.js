@@ -30,10 +30,10 @@ function getFormData(formId) {
             plans: {}
         };
 
-        $('#product-details-' + (i+1) + ' input').each(function () {
+        $('#' + formId + ' #product-details-' + (i+1) + ' input').each(function () {
             product.details[$(this).attr('id')] = $(this).val();
         });
-        $('#product-details-' + (i+1) + ' select').each(function () {
+        $('#' + formId + ' #product-details-' + (i+1) + ' select').each(function () {
             product.details[$(this).attr('id')] = $(this).val();
         });
 

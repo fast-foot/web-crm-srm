@@ -127,7 +127,7 @@ function buildStrategicPlanTable(planPeriods, productNumber, formId) {
             table += '<th class="centeredText" colspan="' + Object.keys(planPeriods[year]).length +'">' + year + '</th>';
             for (var quarter in planPeriods[year]) {
                 quartersRow += "<td>" + quarter + " quarter</td>";
-                inputsForQuarters += '<td><input onchange="calculateTotalSum(\'strategic\',' + productNumber + ')" class="centeredText" type="number" min="0"/></td>';
+                inputsForQuarters += '<td><input onchange="calculateTotalSum(\'strategic\',' + productNumber + ',\'' + formId + '\');" class="centeredText" type="number" min="0"/></td>';
             }
         }
     }
@@ -152,7 +152,7 @@ function buildPerspectivePlanTable(planPeriods, productNumber, formId) {
             for (var quarter in planPeriods[year]) {
                 quartersRow += '<td colspan="' + planPeriods[year][quarter].size +'">' + quarter + ' quarter</td>';
                 planPeriods[year][quarter].forEach(function (month) {
-                    inputsForMonths += '<td><input onchange="calculateTotalSum(\'perspective\',' + productNumber + ')" class="centeredText" type="number" min="0"/></td>';
+                    inputsForMonths += '<td><input onchange="calculateTotalSum(\'perspective\',' + productNumber + ',\'' + formId + '\');" class="centeredText" type="number" min="0"/></td>';
                     monthsRow += "<td>" + month + "</td>";
                 });
                 colSpansToAddForYear += planPeriods[year][quarter].size;
@@ -186,7 +186,7 @@ function buildOperativePlanTable(planPeriods, productNumber, formId) {
                     monthsRow += "<td colspan='3'>" + month + "</td>";
                     for (var k = 0; k < 3; k++) {
                         decadesRow += "<td>" + (k+1) + " decade</td>";
-                        inputsForDecades += '<td><input onchange="calculateTotalSum(\'operative\',' + productNumber + ',' + formId + ')" class="centeredText" type="number" min="0"/></td>';
+                        inputsForDecades += '<td><input onchange="calculateTotalSum(\'operative\',' + productNumber + ',\'' + formId + '\');" class="centeredText" type="number" min="0"/></td>';
                         colSpansToAddForQuarter += 1;
                     }
                 });
@@ -284,9 +284,9 @@ function getProductDetailsForCRMCellData(productNumber) {
         '</td>';
 }
 
-function getProductDetailsForSRMCellData() {
+function getProductDetailsForSRMCellData(productNumber) {
     return '<td class="col-lg-3">' +
-        '<div id="product-details" class="form-horizontal">' +
+        '<div id="product-details-' + productNumber + '" class="form-horizontal">' +
         '<div class="form-group">' +
         '<label for="product-name" class="col-lg-4 col-sm-4 control-label">Product Name</label>' +
         '<div class="col-lg-8 col-sm-8">' +
@@ -337,26 +337,26 @@ function getProductDetailsForSRMCellData() {
         '</td>';
 }
 
-function calculateTotalSum(plan, productNumber) {
+function calculateTotalSum(plan, productNumber, formId) {
     var totalSum = 0;
 
     if (plan == 'strategic') {
-        $('#strategic-table-' + productNumber + ' input').each(function () {
+        $('#' + formId + ' #strategic-table-' + productNumber + ' input').each(function () {
             totalSum += $(this).val() == "" ? 0 : parseInt($(this).val());
         });
 
-        $('#strategic-total-'+productNumber).val(totalSum);
+        $('#' + formId + ' #strategic-total-'+productNumber).val(totalSum);
     } else if (plan == 'perspective') {
-        $('#perspective-table-' + productNumber + ' input').each(function () {
+        $('#' + formId + ' #perspective-table-' + productNumber + ' input').each(function () {
             totalSum += $(this).val() == "" ? 0 : parseInt($(this).val());
         });
 
-        $('#perspective-total-'+productNumber).val(totalSum);
+        $('#' + formId + ' #perspective-total-'+productNumber).val(totalSum);
     } else if (plan == 'operative') {
-        $('#operative-table-' + productNumber + ' input').each(function () {
+        $('#' + formId + ' #operative-table-' + productNumber + ' input').each(function () {
             totalSum += $(this).val() == "" ? 0 : parseInt($(this).val());
         });
 
-        $('#operative-total-'+productNumber).val(totalSum);
+        $('#' + formId + ' #operative-total-'+productNumber).val(totalSum);
     }
 }
