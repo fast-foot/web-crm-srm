@@ -37,10 +37,10 @@ def fake_products(Product):
 
 
 def run_seed(db_session, model):
-    db_session.add_all(fake_companies(model.Company))
-    db_session.add_all(fake_contacts(model.Contact))
-    db_session.add_all(generate_currency(model.Currency))
-    db_session.add_all(generate_plan_types(model.PlanType))
-    db_session.add_all(fake_products(model.Product))
+    # db_session.add_all(fake_companies(model.Company))
+    # db_session.add_all(fake_contacts(model.Contact))
+    # db_session.add_all(fake_products(model.Product))
+    # db_session.add_all(generate_plan_types(model.PlanType))
+    # db_session.add_all(generate_currency(model.Currency))
 
     db_session.commit()

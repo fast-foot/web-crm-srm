@@ -2,40 +2,7 @@
 <form id="srm-form" class="form-horizontal">
     <div class="row" id="main-info">
         <div class="col-lg-12">
-            <div class="col-lg-4 contact-info">
-                <h3 style="text-align: center">Supplier Information</h3><br>
-                <div class="form-group">
-                    <label for="company-name" class="col-sm-4 control-label">Company</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="company-name" placeholder="Company Name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="contact-name" class="col-sm-4 control-label">Contact Name</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="contact-name" placeholder="Contact Name">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="contact-position" class="col-sm-4 control-label">Contact Position</label>
-                    <div class="col-sm-8">
-                      <input type="text" class="form-control" id="contact-position" placeholder="Position">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="contact-email" class="col-sm-4 control-label">Contact Email</label>
-                    <div class="col-sm-8">
-                      <input type="email" class="form-control" id="contact-email" placeholder="Email">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="delivery-time" class="col-sm-4 control-label">Delivery Time</label>
-                    <div class="col-sm-8">
-                      <input type="email" class="form-control" id="delivery-time" placeholder="Delivery Time">
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4 contact-info">
+            <div class="col-lg-4 manager-info">
                 <h3 style="text-align: center">Purchasing Manager Information</h3><br>
                 <div class="form-group">
                     <label for="sales-manager-name" class="col-sm-4 control-label">Name</label>
@@ -73,6 +40,34 @@
                       <input type="tel" class="form-control" id="sales-manager-skype" placeholder="Skype Nickname">
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-4 contact-info">
+                <h3 style="text-align: center">Supplier Information</h3><br>
+                <div class="form-group">
+                    <label for="company-name" class="col-sm-4 control-label">Company</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="company-name" placeholder="Company Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-name" class="col-sm-4 control-label">Contact Name</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="contact-name" placeholder="Contact Name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-position" class="col-sm-4 control-label">Contact Position</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" id="contact-position" placeholder="Position">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="contact-email" class="col-sm-4 control-label">Contact Email</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="contact-email" placeholder="Email">
+                    </div>
+                </div>
+
             </div>
             <div class="col-lg-4 extra-info">
                 <h3 style="text-align: center">Extra Information</h3><br>
@@ -121,7 +116,12 @@
                       <input type="number" min="2016" class="form-control" id="end-year">
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label for="delivery-time" class="col-sm-4 control-label">Delivery Time</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" id="delivery-time" placeholder="Delivery Time">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -142,7 +142,7 @@
                 <tbody></tbody>
             </table>
             <button type="button" class="btn btn-success" id="btn-add-product" style="font-weight: 900;">Add Product</button>
-            <button type="button" class="btn btn-warning" onclick="sendFormData('srm-form')" id="btn-xsl-export" style="font-weight: 900;">Export to .xslx</button>
+            <button type="button" class="btn btn-warning" onclick="exportFormData('srm-form')" id="btn-xsl-export" style="font-weight: 900;">Export to .xslx</button>
         </div>
     </div>
 </form>

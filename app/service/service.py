@@ -1,60 +1,17 @@
+import random
+
 from openpyxl import Workbook
 from openpyxl.styles import PatternFill, Alignment
-import smtplib
-from os.path import basename
-import mimetypes
-from email.mime.multipart import MIMEMultipart
-from email import encoders
-from email.message import Message
-from email.mime.audio import MIMEAudio
-from email.mime.base import MIMEBase
-from email.mime.image import MIMEImage
-from email.mime.application import MIMEApplication
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-from email.mime.text import MIMEText
-from email.utils import COMMASPACE, formatdate
-import random
-import os
 
 
 class Service(object):
     def __init__(self, file_path):
         self.file_path = file_path
-        self.sender = 'alex.chudovsky@gmail.com'
-        self.username = 'alex.chudovsky@gmail.com'
-        self.pwd = 'PWD'
 
         self.common_start_column = 5
         self.strategic_start_row = 1
         self.perspective_start_row = 5
         self.operative_start_row = 9
-
-    def send_email(self, recipient_email, recipient_name, subject, data):
-
-        self.write_sheet(data)
-
-        msg = MIMEMultipart()
-        msg['From'] = self.sender
-        msg['To'] = recipient_email
-        msg['Date'] = formatdate(localtime=True)
-        msg['Subject'] = subject
-
-        msg.attach(MIMEText('Dear {}. Please, give a little time to review our suggestion.\n'
-                            'Thanks for watching!'.format(recipient_name)))
-
-        part = MIMEBase('application', "octet-stream")
-        part.set_payload(open(self.file_path, "rb").read())
-        encoders.encode_base64(part)
-        part.add_header('Content-Disposition', 'attachment; filename="{0}"'.format(os.path.basename(self.file_path)))
-        msg.attach(part)
-
-        server, port = 'smtp.gmail.com', 587
-        smtp = smtplib.SMTP(server, port)
-        smtp.starttls()
-        smtp.login(self.username, self.pwd)
-        smtp.sendmail(self.sender, recipient_email, msg.as_string())
-        smtp.quit()
 
     def write_sheet(self, data: dict):
         wb = Workbook()

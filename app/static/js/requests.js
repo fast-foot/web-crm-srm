@@ -2,9 +2,9 @@ $(document).ready(function () {
 
 });
 
-function sendFormData(formId) {
+function exportFormData(formId) {
     $.ajax({
-            url: '/supply/save',
+            url: '/supply/export',
             data: JSON.stringify(getFormData(formId)),
             type: 'POST',
         }).done(function(data) {
@@ -24,7 +24,18 @@ function sendEmail(formId) {
         }).fail(function (e) {
             console.log(e);
     });
+}
 
+function saveSupply(formId) {
+        $.ajax({
+            url: '/supply/save',
+            data: JSON.stringify(getFormData(formId)),
+            type: 'POST',
+        }).done(function(data) {
+            console.log(data);
+        }).fail(function (e) {
+            console.log(e);
+    });
 }
 
 function getFormData(formId) {
@@ -75,6 +86,7 @@ function getFormData(formId) {
     data.contactDetails = contactDetails;
     data.managerDetails = managerDetails;
     data.extraDetails = extraDetails;
+    data.supply_type = formId == "crm-form" ? 'crm' : 'srm';
 
     console.log(data);
 
