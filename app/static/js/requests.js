@@ -12,6 +12,18 @@ function sendFormData(formId) {
         }).fail(function (e) {
             console.log(e);
     });
+}
+
+function sendEmail(formId) {
+    $.ajax({
+            url: '/send_email',
+            data: JSON.stringify(getFormData(formId)),
+            type: 'POST',
+        }).done(function(data) {
+            console.log(data);
+        }).fail(function (e) {
+            console.log(e);
+    });
 
 }
 
@@ -27,10 +39,10 @@ function getFormData(formId) {
         };
 
         $('#' + formId + ' #product-details-' + (i+1) + ' input').each(function () {
-            product.details[$(this).attr('id')] = $(this).val();
+            product.details[$(this).attr('name')] = $(this).val();
         });
         $('#' + formId + ' #product-details-' + (i+1) + ' select').each(function () {
-            product.details[$(this).attr('id')] = $(this).val();
+            product.details[$(this).attr('name')] = $(this).val();
         });
 
         product.plans.strategic = getStrategicPlanData(i + 1, formId);

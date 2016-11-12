@@ -213,19 +213,19 @@ function getProductDetailsForCRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="product-name" class="col-lg-4 col-sm-4 control-label">Product Name</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="text" class="form-control" id="product-name">' +
+        '<input type="text" class="form-control" id="product-name" name="Product Name">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="sku" class="col-sm-4 control-label">SKU</label>' +
         '<div class="col-sm-8">' +
-        '<input type="text" class="form-control" id="sku">' +
+        '<input type="text" class="form-control" id="sku" name="SKU">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="currency" class="col-sm-4 control-label">Currency</label>' +
         '<div class="col-sm-8">' +
-        '<select id="currency">' +
+        '<select id="currency" name="Currency">' +
         '<option value="USD">USD</option>' +
         '<option value="EUR">EUR</option>' +
         '<option value="BYN">BYN</option>' +
@@ -236,7 +236,7 @@ function getProductDetailsForCRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="dimension-unit" class="col-sm-4 control-label">Dimension</label>' +
         '<div class="col-sm-8">' +
-        '<select id="dimension-unit">' +
+        '<select id="dimension-unit" name="Dimension Unit">' +
         '<option value="kg">kg</option>' +
         '<option value="piece">piece</option>' +
         '<option value="volume">volume</option>' +
@@ -247,37 +247,37 @@ function getProductDetailsForCRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="sale-start-date" class="col-lg-4 col-sm-4 control-label">Start Date</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="date" class="form-control" id="sale-start-date">' +
+        '<input type="date" class="form-control" id="sale-start-date" name="Sale Start Date">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="sale-end-date" class="col-lg-4 col-sm-4 control-label">End Date</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="date" class="form-control" id="sale-end-date">' +
+        '<input type="date" class="form-control" id="sale-end-date" name="Sale End Date">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        '<label for="promo" class="col-lg-4 col-sm-4 control-label">Promo, %</label>' +
+        '<label for="promo" class="col-lg-4 col-sm-4 control-label">Discount, %</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="number" min="0" max="100" class="form-control" id="promo">' +
+        '<input type="number" min="0" max="100" class="form-control" id="promo" name="Discount">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
-        '<label for="promo-price" class="col-lg-4 col-sm-4 control-label">Price with Promo</label>' +
+        '<label for="promo-price" class="col-lg-4 col-sm-4 control-label">Price with Discount</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="text" class="form-control" id="promo-price">' +
+        '<input type="text" class="form-control" id="promo-price" name="Price with Discount">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="quantity" class="col-lg-4 col-sm-4 control-label">Quantity</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="number" class="form-control" id="quantity">' +
+        '<input type="number" class="form-control" id="quantity" name="Quantity">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="sale-comments" class="col-lg-4 col-sm-4 control-label">Comments</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="text" class="form-control" id="sale-comments">' +
+        '<input type="text" class="form-control" id="sale-comments" name="Sale Description">' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -290,7 +290,7 @@ function getProductDetailsForSRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="product-name" class="col-lg-4 col-sm-4 control-label">Product Name</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="text" class="form-control" id="product-name">' +
+        '<input type="text" class="form-control" id="product-name" name="Product Name">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
@@ -302,7 +302,7 @@ function getProductDetailsForSRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="currency" class="col-sm-4 control-label">Currency</label>' +
         '<div class="col-sm-8">' +
-        '<select id="currency">' +
+        '<select id="currency" name="Currency">' +
         '<option value="USD">USD</option>' +
         '<option value="EUR">EUR</option>' +
         '<option value="BYN">BYN</option>' +
@@ -313,7 +313,7 @@ function getProductDetailsForSRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="dimension-unit" class="col-sm-4 control-label">Dimension</label>' +
         '<div class="col-sm-8">' +
-        '<select id="dimension-unit">' +
+        '<select id="dimension-unit" name="Dimension Unit">' +
         '<option value="kg">kg</option>' +
         '<option value="piece">piece</option>' +
         '<option value="volume">volume</option>' +
@@ -324,13 +324,13 @@ function getProductDetailsForSRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="receiving-date" class="col-lg-4 col-sm-4 control-label">Date of Receiving</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="date" class="form-control" id="receiving-date">' +
+        '<input type="date" class="form-control" id="receiving-date" name="Immediate Request">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
         '<label for="quantity" class="col-lg-4 col-sm-4 control-label">Quantity</label>' +
         '<div class="col-lg-8 col-sm-8">' +
-        '<input type="number" class="form-control" id="quantity">' +
+        '<input type="number" class="form-control" id="quantity" name="Quantity">' +
         '</div>' +
         '</div>' +
         '</div>' +

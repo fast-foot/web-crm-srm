@@ -22,3 +22,8 @@ def crm_supply():
 @application.route('/supply/save', methods=['POST'])
 def save_supply():
     return facade.save_supply(flask.request)
+
+
+@application.route('/send_email', methods=['POST'])
+def send_email():
+    return facade.send_email(flask.request)

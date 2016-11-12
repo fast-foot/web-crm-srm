@@ -118,7 +118,7 @@
                       </select>
                     </div>
                     <div class="col-sm-3">
-                      <input type="number" min="2016" value="2016" name="end-year" class="form-control" id="end-year">
+                      <input type="number" min="2016" value="2016" name="End Year" class="form-control" id="end-year">
                     </div>
                 </div>
 
@@ -143,6 +143,7 @@
             </table>
             <button type="button" class="btn btn-success" id="btn-add-product" style="font-weight: 900;">Add Product</button>
             <button type="button" class="btn btn-warning" onclick="sendFormData('crm-form')" id="btn-xsl-export" style="font-weight: 900;">Export to .xslx</button>
+            <button type="button" class="btn btn-danger" onclick="sendEmail('crm-form')" id="btn-xsl-export" style="font-weight: 900;">Send attachment to the client</button>
         </div>
     </div>
 </form>
