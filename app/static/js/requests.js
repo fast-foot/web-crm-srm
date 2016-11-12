@@ -1,14 +1,8 @@
-const SERVER_END_POINT = 'http://127.0.0.1:5000';
-
 $(document).ready(function () {
 
 });
 
 function sendFormData(formId) {
-    // var data = {
-    //     data: JSON.stringify(getFormData(formId))
-    // };
-
     $.ajax({
             url: '/supply/save',
             data: JSON.stringify(getFormData(formId)),
@@ -88,9 +82,11 @@ function getStrategicPlanData(tableNumber, formId) {
         data[year] = {} ;
         currentQuartersCount = parseInt($(this).attr('colspan'));
 
+        var quarterNumber = 0;
         for (var i = previousQuartersCount; i < previousQuartersCount + currentQuartersCount; i++) {
             var input = $('#' + formId + ' #strategic-table-' + tableNumber + ' > tbody > tr:eq(1) > td:eq(' + i + ') input');
-            data[year][i + 1] = input.val() == "" ? 0 : parseInt(input.val());
+            data[year][quarterNumber + 1] = input.val() == "" ? 0 : parseInt(input.val());
+            quarterNumber += 1;
         }
 
         previousQuartersCount = currentQuartersCount;
