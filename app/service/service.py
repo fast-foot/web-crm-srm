@@ -9,8 +9,8 @@ class Service(object):
 
         self.common_start_column = 5
         self.strategic_start_row = 1
-        self.perspective_start_row = 4
-        self.operative_start_row = 7
+        self.perspective_start_row = 5
+        self.operative_start_row = 9
 
     def write_sheet(self, data: dict):
         wb = Workbook()
@@ -52,21 +52,21 @@ class Service(object):
                 ws2.cell(row=(j + start_indent), column=3).value = value
 
             self._write_strategic_plan(ws2, product['plans']['strategic'])
-            self._write_pespective_plan(ws2, product['plans']['perspective'])
+            self._write_perspective_plan(ws2, product['plans']['perspective'])
             self._write_operative_plan(ws2, product['plans']['operative'])
 
-            start_indent += 12
+            start_indent += 16
 
         wb.save(filename=self.file_name)
 
     def _write_strategic_plan(self, ws, data):
-        color = self.random_color()
-
+        header_row = self.strategic_start_row
         for year, quarters_data in sorted(data.items()):
+            color = self.random_color()
             if year == 'total':
                 continue
             start_col = self.common_start_column
-            start_row = self.strategic_start_row
+            start_row = self.strategic_start_row + 1
 
             cols_to_split = len(quarters_data) - 1
 
@@ -89,24 +89,45 @@ class Service(object):
 
                 start_quarter_col += 1
 
+            self.common_start_column += cols_to_split + 1
+
             ws.cell(row=start_row, column=start_col).fill = PatternFill(fill_type="solid",
                                                                         start_color='FF' + color,
                                                                         end_color='FF' + color)
 
-            self.common_start_column += cols_to_split + 1
+        self._write_sum(ws=ws,
+                        header_row_number=self.strategic_start_row + 1,
+                        col_number=self.common_start_column,
+                        cols_to_split=2,
+                        value=data['total'])
 
-        self.strategic_start_row += 12
+        ws.cell(row=header_row,
+                column=5,
+                value='Strategic Plan').alignment = Alignment(horizontal='center')
+        ws.merge_cells(start_row=header_row,
+                       end_row=header_row,
+                       start_column=5,
+                       end_column=self.common_start_column)
+
+            # for row in ws.iter_rows(min_col=start_col,
+            #                         max_col=start_col + cols_to_split,
+            #                         min_row=start_row,
+            #                         max_row=start_row + 2):
+            #     for cell in row:
+            #         cell.fill = PatternFill(fill_type="solid", start_color='FF' + color, end_color='FF' + color)
+
+        self.strategic_start_row += 16
         self.common_start_column = 5
 
-    def _write_pespective_plan(self, ws, data):
-        color = self.random_color()
-
+    def _write_perspective_plan(self, ws, data):
+        header_row = self.perspective_start_row
         for year, months_data in sorted(data.items()):
+            color = self.random_color()
             if year == 'total':
                 continue
-            start_row = self.perspective_start_row
+            start_row = self.perspective_start_row + 1
             start_col = self.common_start_column
-            months_count = len(months_data)
+            months_count = len(months_data) - 1
 
             ws.cell(row=start_row, column=start_col, value=year).alignment = Alignment(horizontal='center')
             ws.merge_cells(start_row=start_row,
@@ -132,22 +153,36 @@ class Service(object):
 
             self.common_start_column += months_count + 1
 
-        self.perspective_start_row += 12
+        self._write_sum(ws=ws,
+                        header_row_number=self.perspective_start_row + 1,
+                        col_number=self.common_start_column,
+                        cols_to_split=2,
+                        value=data['total'])
+
+        ws.cell(row=header_row,
+                column=5,
+                value='Perspective Plan').alignment = Alignment(horizontal='center')
+        ws.merge_cells(start_row=header_row,
+                       end_row=header_row,
+                       start_column=5,
+                       end_column=self.common_start_column)
+
+        self.perspective_start_row += 16
         self.common_start_column = 5
 
     def _write_operative_plan(self, ws, data):
-        color = self.random_color()
-
         month_start_col = self.common_start_column
         year_start_col = self.common_start_column
+        header_row = self.operative_start_row
 
         for year, year_data in sorted(data.items()):
+            color = self.random_color()
             if year == 'total':
                 continue
 
-            start_row = self.operative_start_row
+            start_row = self.operative_start_row + 1
 
-            decades_count = len(year_data) * 3
+            decades_count = len(year_data) * 3 - 1
 
             ws.cell(row=start_row, column=year_start_col, value=year).alignment = Alignment(horizontal='center')
             ws.merge_cells(start_row=start_row,
@@ -185,7 +220,39 @@ class Service(object):
 
             year_start_col += decades_count + 1
 
-        self.operative_start_row += 12
+        self._write_sum(ws=ws,
+                        header_row_number=self.operative_start_row + 1,
+                        col_number=year_start_col,
+                        cols_to_split=3,
+                        value=data['total'])
+
+        ws.cell(row=header_row,
+                column=5,
+                value='Operative Plan').alignment = Alignment(horizontal='center')
+        ws.merge_cells(start_row=header_row,
+                       end_row=header_row,
+                       start_column=5,
+                       end_column=month_start_col)
+
+        self.operative_start_row += 16
+        self.common_start_column = 5
+
+    def _write_sum(self, ws, header_row_number, col_number, cols_to_split, value):
+        ws.cell(row=header_row_number, column=col_number, value='Total').alignment = Alignment(horizontal='center')
+
+        ws.cell(row=header_row_number, column=col_number).fill = PatternFill(fill_type="solid",
+                                                                             start_color='FF4500',
+                                                                             end_color='FF4500')
+
+        ws.cell(row=header_row_number + 1, column=col_number, value=value).alignment = Alignment(horizontal='center',
+                                                                                                 vertical='center')
+        ws.cell(row=header_row_number + 1, column=col_number).fill = PatternFill(fill_type="solid",
+                                                                                 start_color='B0F2F4',
+                                                                                 end_color='B0F2F4')
+        ws.merge_cells(start_row=header_row_number + 1,
+                       end_row=header_row_number + cols_to_split,
+                       start_column=col_number,
+                       end_column=col_number)
 
     def random_color(self):
         r = lambda: random.randint(0, 255)
@@ -213,4 +280,4 @@ class Calendar(object):
 
     @staticmethod
     def ordered_months(months_dict):
-        return [month for month in Calendar.months_map() if months_dict.get(month)]
+        return [month for month in Calendar.months_map() if month in months_dict]
