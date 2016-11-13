@@ -1,8 +1,9 @@
 Flask==0.11.1
 Jinja2==2.8
-SQLAlchemy==1.1.1
 SQLAlchemy-Utils==0.32.9
 itsdangerous==0.24
 openpyxl==2.4.0
 psycopg2==2.6.2
 livereload==2.4.1
+Flask-SQLAlchemy==2.1
+SQLAlchemy==1.0.12

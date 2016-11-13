@@ -25,17 +25,20 @@ class DBService(object):
             if not data['contactDetails'].get('Contact Name'):
                 return 'Contact Name is not specified.'
             else:
-                contact = self.get_contact(data['contactDetails']['Contact Name'], company)
+                contact = self.get_contact(data['contactDetails']['Contact Name'],
+                                           data['contactDetails']['Contact Email'])
                 if not contact:
                     contact = self.create_contact(data['contactDetails'], company)
 
-                manager = self.get_contact(data['managerDetails'], company)
+                manager = self.get_contact(data['managerDetails']['Name'],
+                                           data['managerDetails']['Email'])
                 if not manager:
                     manager = self.create_manager(data['managerDetails'], company)
 
                 self.create_deal(extraDetails=data['extraDetails'],
                                  products=data['products'],
                                  contact=contact,
+                                 manager=manager,
                                  deal_type=data['supply_type'])
 
                 db_session.commit()
@@ -74,7 +77,7 @@ class DBService(object):
         db_session.add(manager)
         return manager
 
-    def create_deal(self, extraDetails, products, contact, deal_type):
+    def create_deal(self, extraDetails, products, contact, manager, deal_type):
         data = {
             'extraDetails': extraDetails,
             'products': products
@@ -83,6 +86,9 @@ class DBService(object):
                     contact=contact,
                     created_date=datetime.datetime.utcnow(),
                     _type=deal_type)
+
+        deal.contacts.append(contact)
+        deal.contacts.append(manager)
 
         db_session.add(deal)
         return deal

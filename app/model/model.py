@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, Boolean, String, Float, ForeignKey, Table, JSON, DateTime
+from sqlalchemy import Column, Integer, Boolean, String, Float, ForeignKey, Table, DateTime
+from sqlalchemy.dialects.postgresql import JSON
 from sqlalchemy.orm import relationship
 from app.db.database import Base, init_db
 
@@ -16,7 +17,7 @@ class Company(Base):
         self.name = name
 
     def __repr__(self):
-        return '<Company(name={})'.format(self.name)
+        return '<Company(name={})>'.format(self.name)
 
 
 class Contact(Base):
@@ -25,7 +26,8 @@ class Contact(Base):
     id = Column(Integer, primary_key=True)
     company_id = Column(Integer, ForeignKey('companies.id'))
     company = relationship('Company', back_populates='contacts')
-    deal = relationship('Deal', back_populates='contact')
+    #deal = relationship('Deal', back_populates='contact')
+    deals = relationship('Deal', secondary='contacts_deals')
     name = Column(String(100))
     post = Column(String(40))
     email = Column(String(50))
@@ -44,19 +46,27 @@ class Contact(Base):
         self._type = _type
         self.company = company
 
-contact_deals = Table('contacts_deals', Base.metadata,
-                      Column('contact_id', ForeignKey('contacts.id')),
-                      Column('deal_id', ForeignKey('deals.id')),
-                      )
 
+class ContactDeal(Base):
+    __tablename__ = 'contacts_deals'
+
+    contact_id = Column(Integer, ForeignKey('contacts.id'), primary_key=True)
+    deal_id = Column(Integer, ForeignKey('deals.id'))
+
+
+# contact_deals = Table('contacts_deals', Base.metadata,
+#                       Column('contact_id', ForeignKey('contacts.id')),
+#                       Column('deal_id', ForeignKey('deals.id')),
+#                       )
 
 class Deal(Base):
     __tablename__ = 'deals'
 
     id = Column(Integer, primary_key=True)
     data = Column(JSON)
-    contact_id = Column(Integer, ForeignKey('contacts.id'))
-    contact = relationship('Contact', back_populates='deal')
+    #contact_id = Column(Integer, ForeignKey('contacts.id'))
+    #contact = relationship('Contact', back_populates='deal')
+    contacts = relationship('Contact', secondary='contacts_deals')
     #currency_id = Column(Integer, ForeignKey('currencies.id'))
     #description = Column(String(200))
     created_date = Column(DateTime, default=datetime.datetime.utcnow())
