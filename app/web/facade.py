@@ -1,8 +1,11 @@
 import json
+import os
 
-from app.service.service import Service
+from app.service.xsl_service import Service
 from app.service.mail_service import MailService
 from app.service.database_service import DBService
+
+from werkzeug.utils import secure_filename
 
 xsl_file_path = '/home/alex/Documents/WorkSpace/univer/projects/' \
                 'web-srm-crm/app/static/sheets/Products Suggestion.xslx'
@@ -38,3 +41,18 @@ def send_email(flask_request):
 
 def get_deals():
     return DBService.get_deals()
+
+
+def analyze_deal(flask_request):
+    if 'xsl' not in flask_request.files:
+        print('No file part')
+        return {}
+
+    file = flask_request.files['xsl']
+
+    if file.filename == '':
+        print('No selected file')
+        return 'No selected file'
+    #filename = secure_filename(file.filename)
+
+    return service.calc_making_deal_probability(file)

@@ -6,7 +6,7 @@ from app import application
 
 @application.route('/')
 def index():
-    return flask.render_template('index.html')
+    return flask.render_template('index.html', data={})
 
 
 @application.route('/srm')
@@ -36,5 +36,10 @@ def save_supply():
 
 @application.route('/deals', methods=['GET'])
 def get_deals():
-    d = facade.get_deals()
     return flask.render_template('forms/deals_history.html', deals=facade.get_deals())
+
+
+@application.route('/analyze_deal', methods=['POST', 'GET'])
+def analyze_deal():
+    data = facade.analyze_deal(flask.request)
+    return flask.render_template('forms/deals_analyzer.html', data=data)

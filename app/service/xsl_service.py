@@ -1,8 +1,27 @@
 import random
 
-from openpyxl import Workbook
+from io import BytesIO
+from openpyxl import Workbook, load_workbook
 from openpyxl.styles import PatternFill, Alignment
 
+
+class ObjectiveDealValue(object):
+    def __init__(self):
+        self.STRATEGIC_PLAN = 150
+        self.PERSPECTIVE_PLAN = 320
+        self.OPERATIVE_PLAN = 500
+
+    @property
+    def strategic(self):
+        return self.STRATEGIC_PLAN
+
+    @property
+    def perspective(self):
+        return self.PERSPECTIVE_PLAN
+
+    @property
+    def operative(self):
+        return self.OPERATIVE_PLAN
 
 class Service(object):
     def __init__(self, file_path):
@@ -12,6 +31,8 @@ class Service(object):
         self.strategic_start_row = 1
         self.perspective_start_row = 5
         self.operative_start_row = 9
+
+        self.common_indent = 16
 
     def write_sheet(self, data: dict):
         wb = Workbook()
@@ -57,9 +78,95 @@ class Service(object):
             self._write_perspective_plan(ws2, product['plans']['perspective'])
             self._write_operative_plan(ws2, product['plans']['operative'])
 
-            start_indent += 16
+            start_indent += self.common_indent
 
         wb.save(filename=self.file_path)
+
+    def calc_making_deal_probability(self, binary_file):
+        wb = load_workbook(filename=BytesIO(binary_file.read()))
+        ws = wb['Products Information']
+
+        total_plans_result = self._get_plans_total_results(ws)
+        result = self._update_with_probability(total_plans_result)
+
+        odv = ObjectiveDealValue()
+        result['objective_deal_values'] = {
+            'strategic': odv.strategic,
+            'perspective': odv.perspective,
+            'operative': odv.operative
+        }
+
+        return result
+
+    def _update_with_probability(self, products):
+        result = {}
+        odv = ObjectiveDealValue()
+
+        products_count = len(products)
+        meet_plans = 0
+
+        for product in products:
+            incr = 0
+            if product['strategic'] >= odv.strategic:
+                incr += 1
+            if product['perspective'] >= odv.perspective:
+                incr += 1
+            if product['operative'] >= odv.operative:
+                incr += 1
+            if incr == 3:
+                meet_plans += 1
+                product['meet'] = True
+            else:
+                product['meet'] = False
+
+        result['probability'] = 0 if meet_plans == 0 else (meet_plans / products_count) * 100
+        result['meet_plans_count'] = meet_plans
+        result['not_meet_plans_count'] = products_count - meet_plans
+        result['products'] = products
+
+        return result
+
+    def _get_plans_total_results(self, ws):
+        products = []
+
+        product_number = 1
+        indent = self.common_indent
+        current_product_number_row = 1
+
+        strategic_start_row = self.strategic_start_row + 1
+        perspective_start_row = self.perspective_start_row + 1
+        opearive_start_row = self.operative_start_row + 1
+
+        while True:
+            try:
+                product = {}
+                if ws['A{}'.format(current_product_number_row)].value == str(product_number):
+                    product['name'] = ws['C{}'.format(current_product_number_row + 2)].value
+                    product['sku'] = ws['C{}'.format(current_product_number_row + 8)].value
+                    for start_row, plan in zip((strategic_start_row, perspective_start_row, opearive_start_row),
+                                               ('strategic', 'perspective', 'operative')):
+                        for row in ws.iter_rows(min_row=start_row,
+                                                max_row=start_row,
+                                                min_col=self.common_start_column):
+                            for cell in row:
+                                print(cell.value)
+                                if cell.value == 'Total':
+                                    product[plan] = ws.cell(row=cell.row + 1, column=cell.col_idx).value
+                                    break
+                    products.append(product)
+                else:
+                    break
+            except Exception as e:
+                error = 'Method "_parse_plans_total_results". ' + repr(e)
+                print(error)
+
+            product_number += 1
+            current_product_number_row += indent
+            strategic_start_row += indent
+            perspective_start_row += indent
+            opearive_start_row += indent
+
+        return products
 
     def _write_strategic_plan(self, ws, data):
         header_row = self.strategic_start_row
@@ -118,7 +225,7 @@ class Service(object):
             #     for cell in row:
             #         cell.fill = PatternFill(fill_type="solid", start_color='FF' + color, end_color='FF' + color)
 
-        self.strategic_start_row += 16
+        self.strategic_start_row += self.common_indent
         self.common_start_column = 5
 
     def _write_perspective_plan(self, ws, data):
@@ -169,7 +276,7 @@ class Service(object):
                        start_column=5,
                        end_column=self.common_start_column)
 
-        self.perspective_start_row += 16
+        self.perspective_start_row += self.common_indent
         self.common_start_column = 5
 
     def _write_operative_plan(self, ws, data):
@@ -236,7 +343,7 @@ class Service(object):
                        start_column=5,
                        end_column=month_start_col)
 
-        self.operative_start_row += 16
+        self.operative_start_row += self.common_indent
         self.common_start_column = 5
 
     def _write_sum(self, ws, header_row_number, col_number, cols_to_split, value):
