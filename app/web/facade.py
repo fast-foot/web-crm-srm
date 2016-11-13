@@ -34,3 +34,7 @@ def send_email(flask_request):
         return 'Email sent successfully!'
     else:
         return 'Failed to send email.'
+
+
+def get_deals():
+    return DBService.get_deals()

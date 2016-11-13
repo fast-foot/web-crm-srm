@@ -36,11 +36,16 @@ def fake_products(Product):
                     unit_type='coffee') for pr in products]
 
 
+def create_our_company(Company):
+    return Company(name='PY')
+
+
 def run_seed(db_session, model):
     # db_session.add_all(fake_companies(model.Company))
     # db_session.add_all(fake_contacts(model.Contact))
     # db_session.add_all(fake_products(model.Product))
     # db_session.add_all(generate_plan_types(model.PlanType))
     # db_session.add_all(generate_currency(model.Currency))
+    db_session.add(create_our_company(model.Company))
 
     db_session.commit()

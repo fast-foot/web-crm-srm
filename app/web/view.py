@@ -32,3 +32,9 @@ def send_email():
 @application.route('/supply/save', methods=['POST'])
 def save_supply():
     return facade.save_supply(flask.request)
+
+
+@application.route('/deals', methods=['GET'])
+def get_deals():
+    d = facade.get_deals()
+    return flask.render_template('forms/deals_history.html', deals=facade.get_deals())

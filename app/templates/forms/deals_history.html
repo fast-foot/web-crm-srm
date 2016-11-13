@@ -1,0 +1,65 @@
+{% include 'parts/head.html' %}
+  <body>
+    <div class="container-fluid">
+
+        {% include 'parts/nav-bar.html' %}
+
+        <div>
+            <div id="deals-form-container">
+                <form id="deals-history" class="form-horizontal">
+                    <div class="row">
+                        <table class="table table-responsive table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <td>№</td>
+                                    <th>Manager Details</th>
+                                    <th>Client Details</th>
+                                    <th>Supply for</th>
+                                    <th>Created Date</th>
+                                </tr>
+                            </thead>
+                            {% for deal_wrapper in deals %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>
+                                        Company: {{ deal_wrapper.contacts.manager.company }} <br>
+                                        Name: {{ deal_wrapper.contacts.manager.name }} <br>
+                                        Email: {{ deal_wrapper.contacts.manager.email }}<br>
+                                        Phone: {{ deal_wrapper.contacts.manager.phone }}<br>
+                                        Fax: {{ deal_wrapper.contacts.manager.fax }}<br>
+                                        Skype: {{ deal_wrapper.contacts.manager.skype }}<br>
+                                    </td>
+                                    <td>
+                                        Company: {{ deal_wrapper.contacts.client.company }} <br>
+                                        Name: {{ deal_wrapper.contacts.client.name }} <br>
+                                        Email: {{ deal_wrapper.contacts.client.email }}<br>
+                                        Position: {{ deal_wrapper.contacts.manager.post }}<br>
+                                    </td>
+                                    <td>
+                                        {% if deal_wrapper.deal.type == 'crm' %}
+                                            CRM
+                                        {% endif %}
+                                        {% if deal_wrapper.deal.type == 'srm' %}
+                                            SRM
+                                        {% endif %}
+
+                                    </td>
+                                    <td>
+                                        {{ deal_wrapper.deal.created_date }}
+                                    </td>
+
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </form>
+</div>
+
+        </div>
+
+    </div>
+  </body>
+
+  {% include 'parts/scripts.html' %}
+
+</html>

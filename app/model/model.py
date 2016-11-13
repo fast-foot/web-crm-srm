@@ -50,7 +50,8 @@ class Contact(Base):
 class ContactDeal(Base):
     __tablename__ = 'contacts_deals'
 
-    contact_id = Column(Integer, ForeignKey('contacts.id'), primary_key=True)
+    _id = Column(Integer, primary_key=True)
+    contact_id = Column(Integer, ForeignKey('contacts.id'))
     deal_id = Column(Integer, ForeignKey('deals.id'))
 
 
