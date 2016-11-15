@@ -7,37 +7,37 @@
                 <div class="form-group">
                     <label for="sales-manager-name" class="col-sm-4 control-label">Name</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="sales-manager-name" placeholder="Name">
+                      <input type="text" class="form-control" name="Name" id="sales-manager-name" placeholder="Name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="sales-manager-position" class="col-sm-4 control-label">Position</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="sales-manager-position" placeholder="Position">
+                      <input type="text" class="form-control" name="Position" id="sales-manager-position" placeholder="Position">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="sales-manager-email" class="col-sm-4 control-label">Email</label>
                     <div class="col-sm-8">
-                      <input type="email" class="form-control" id="sales-manager-email" placeholder="Email">
+                      <input type="email" class="form-control" name="Email" id="sales-manager-email" placeholder="Email">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="sales-manager-phone" class="col-sm-4 control-label">Phone</label>
                     <div class="col-sm-8">
-                      <input type="tel" class="form-control" id="sales-manager-phone" placeholder="Phone Number">
+                      <input type="tel" class="form-control" name="Phone" id="sales-manager-phone" placeholder="Phone Number">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="sales-manager-fax" class="col-sm-4 control-label">Fax</label>
                     <div class="col-sm-8">
-                      <input type="tel" class="form-control" id="sales-manager-fax" placeholder="Fax">
+                      <input type="tel" class="form-control" name="Fax" id="sales-manager-fax" placeholder="Fax">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="sales-manager-skype" class="col-sm-4 control-label">Skype</label>
                     <div class="col-sm-8">
-                      <input type="tel" class="form-control" id="sales-manager-skype" placeholder="Skype Nickname">
+                      <input type="tel" class="form-control" name="Skype" id="sales-manager-skype" placeholder="Skype Nickname">
                     </div>
                 </div>
             </div>
@@ -46,28 +46,27 @@
                 <div class="form-group">
                     <label for="company-name" class="col-sm-4 control-label">Company</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="company-name" placeholder="Company Name">
+                      <input type="text" class="form-control" name="Company Name" id="company-name" placeholder="Company Name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="contact-name" class="col-sm-4 control-label">Contact Name</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="contact-name" placeholder="Contact Name">
+                      <input type="text" class="form-control" name="Contact Name" id="contact-name" placeholder="Contact Name">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="contact-position" class="col-sm-4 control-label">Contact Position</label>
                     <div class="col-sm-8">
-                      <input type="text" class="form-control" id="contact-position" placeholder="Position">
+                      <input type="text" class="form-control" name="Contact Position" id="contact-position" placeholder="Position">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="contact-email" class="col-sm-4 control-label">Contact Email</label>
                     <div class="col-sm-8">
-                      <input type="email" class="form-control" id="contact-email" placeholder="Email">
+                      <input type="email" class="form-control" name="Contact Email" id="contact-email" placeholder="Email">
                     </div>
                 </div>
-
             </div>
             <div class="col-lg-4 extra-info">
                 <h3 style="text-align: center">Extra Information</h3><br>
@@ -75,7 +74,7 @@
                 <div class="form-group">
                     <label for="start-month" class="col-sm-5 control-label">Start Month and Year</label>
                     <div class="col-sm-4">
-                      <select class="form-control" id="start-month">
+                      <select class="form-control" name="Start Month" id="start-month">
                           <option value="0">January</option>
                           <option value="1">February</option>
                           <option value="2">March</option>
@@ -91,13 +90,13 @@
                       </select>
                     </div>
                     <div class="col-sm-3">
-                      <input type="number" min="2016" class="form-control" id="start-year">
+                      <input type="number" min="2016" value="2016" name="Start Year" class="form-control" id="start-year">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="end-month" class="col-sm-5 control-label">End Month and Year</label>
                     <div class="col-sm-4">
-                      <select class="form-control" id="end-month">
+                      <select class="form-control" name="End Month" id="end-month">
                           <option value="0">January</option>
                           <option value="1">February</option>
                           <option value="2">March</option>
@@ -113,13 +112,13 @@
                       </select>
                     </div>
                     <div class="col-sm-3">
-                      <input type="number" min="2016" class="form-control" id="end-year">
+                      <input type="number" min="2016" value="2016" name="End Year" class="form-control" id="end-year">
                     </div>
                 </div>
                 <div class="form-group">
                     <label for="delivery-time" class="col-sm-4 control-label">Delivery Time</label>
                     <div class="col-sm-8">
-                      <input type="email" class="form-control" id="delivery-time" placeholder="Delivery Time">
+                      <input type="email" class="form-control" name="Delivery Time" id="delivery-time" placeholder="Delivery Time">
                     </div>
                 </div>
             </div>
@@ -143,6 +142,8 @@
             </table>
             <button type="button" class="btn btn-success" id="btn-add-product" style="font-weight: 900;">Add Product</button>
             <button type="button" class="btn btn-warning" onclick="exportFormData('srm-form')" id="btn-xsl-export" style="font-weight: 900;">Export to .xslx</button>
+            <button type="button" class="btn btn-danger" onclick="sendEmail('srm-form')" id="btn-send-email" style="font-weight: 900;">Send supply to the client</button>
+            <button type="button" class="btn btn-default" onclick="saveSupply('srm-form')" id="btn-save-supply" style="font-weight: 900;background-color: dodgerblue;">Save supply</button>
         </div>
     </div>
 </form>

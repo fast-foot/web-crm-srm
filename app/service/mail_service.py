@@ -12,7 +12,7 @@ class MailService(object):
     def __init__(self):
         self.sender = 'alex.chudovsky@gmail.com'
         self.username = 'alex.chudovsky@gmail.com'
-        self.pwd = 'PWD'
+        self.pwd = '!Sp19Jk95'
 
     def send_email(self, recipient_email, recipient_name, subject, file_path):
         msg = MIMEMultipart()

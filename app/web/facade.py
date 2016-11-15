@@ -45,8 +45,8 @@ def get_deals():
 
 def analyze_deal(flask_request):
     if 'xsl' not in flask_request.files:
-        print('No file part')
-        return {}
+        print('No file part! ! !')
+        return ''
 
     file = flask_request.files['xsl']
 

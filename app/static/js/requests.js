@@ -8,8 +8,10 @@ function exportFormData(formId) {
             data: JSON.stringify(getFormData(formId)),
             type: 'POST',
         }).done(function(data) {
+            alert(data);
             console.log(data);
         }).fail(function (e) {
+            alert(e);
             console.log(e);
     });
 }
@@ -20,8 +22,10 @@ function sendEmail(formId) {
             data: JSON.stringify(getFormData(formId)),
             type: 'POST',
         }).done(function(data) {
+            alert(data);
             console.log(data);
         }).fail(function (e) {
+            alert(e);
             console.log(e);
     });
 }
@@ -32,8 +36,10 @@ function saveSupply(formId) {
             data: JSON.stringify(getFormData(formId)),
             type: 'POST',
         }).done(function(data) {
+            alert(data);
             console.log(data);
         }).fail(function (e) {
+            alert(e);
             console.log(e);
     });
 }

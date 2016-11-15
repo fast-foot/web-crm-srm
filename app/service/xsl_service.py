@@ -23,6 +23,7 @@ class ObjectiveDealValue(object):
     def operative(self):
         return self.OPERATIVE_PLAN
 
+
 class Service(object):
     def __init__(self, file_path):
         self.file_path = file_path
@@ -35,6 +36,13 @@ class Service(object):
         self.common_indent = 16
 
     def write_sheet(self, data: dict):
+        self.common_start_column = 5
+        self.strategic_start_row = 1
+        self.perspective_start_row = 5
+        self.operative_start_row = 9
+
+        self.common_indent = 16
+
         wb = Workbook()
 
         ws1 = wb.active
@@ -85,6 +93,8 @@ class Service(object):
     def calc_making_deal_probability(self, binary_file):
         wb = load_workbook(filename=BytesIO(binary_file.read()))
         ws = wb['Products Information']
+        wa = wb['Products Information']
+        wf = wb['Products Information']
 
         total_plans_result = self._get_plans_total_results(ws)
         result = self._update_with_probability(total_plans_result)
@@ -141,15 +151,14 @@ class Service(object):
             try:
                 product = {}
                 if ws['A{}'.format(current_product_number_row)].value == str(product_number):
-                    product['name'] = ws['C{}'.format(current_product_number_row + 2)].value
-                    product['sku'] = ws['C{}'.format(current_product_number_row + 8)].value
+                    product['name'] = ws['C{}'.format(current_product_number_row)].value
+                    product['sku'] = ws['C{}'.format(current_product_number_row + 7)].value
                     for start_row, plan in zip((strategic_start_row, perspective_start_row, opearive_start_row),
                                                ('strategic', 'perspective', 'operative')):
                         for row in ws.iter_rows(min_row=start_row,
                                                 max_row=start_row,
                                                 min_col=self.common_start_column):
                             for cell in row:
-                                print(cell.value)
                                 if cell.value == 'Total':
                                     product[plan] = ws.cell(row=cell.row + 1, column=cell.col_idx).value
                                     break

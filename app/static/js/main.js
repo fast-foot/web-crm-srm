@@ -302,7 +302,7 @@ function getProductDetailsForSRMCellData(productNumber) {
         '<div class="form-group">' +
         '<label for="sku" class="col-sm-4 control-label">SKU</label>' +
         '<div class="col-sm-8">' +
-        '<input type="text" class="form-control" id="sku">' +
+        '<input type="text" class="form-control" id="sku" name="SKU">' +
         '</div>' +
         '</div>' +
         '<div class="form-group">' +
